@@ -1,3 +1,8 @@
+# About this fork
+This fork exists to let user to customise react-scripts configs (webpack and webpackDevServer configs)
+
+[Full documentation](./packages/react-scripts/README.md)
+
 # Create React App [![Build Status](https://travis-ci.org/facebook/create-react-app.svg?branch=master)](https://travis-ci.org/facebook/create-react-app)
 
 Create React apps with no build configuration.
