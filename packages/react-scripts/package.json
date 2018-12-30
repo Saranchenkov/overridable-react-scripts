@@ -1,6 +1,6 @@
 {
   "name": "overridable-react-scripts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "react-scripts-version": "2.1.2",
   "description": "Configuration and scripts for Create React App.",
   "repository": "Saranchenkov/overridable-react-scripts",
