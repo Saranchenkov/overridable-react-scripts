@@ -1,3 +1,4 @@
+const configFactory = require('./webpack.config');
 const webpack = require('webpack');
 const paths = require('./paths');
 
@@ -13,10 +14,13 @@ try {
   }
 }
 
-module.exports = function createWebpackConfig(webpackConfig) {
+module.exports = function createWebpackConfig(webpackEnv) {
+  const webpackConfig = configFactory(webpackEnv);
+
   const options = {
     webpack,
     paths,
+    webpackEnv,
   };
 
   return overrideFunction(webpackConfig, options);

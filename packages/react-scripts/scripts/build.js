@@ -36,8 +36,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
-const configFactory = require('../config/webpack.config');
-const overrideConfig = require('../config/webpack.config.override');
+const configFactory = require('../config/webpack.config.override');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -66,7 +65,7 @@ const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // Generate configuration
-const overriddenConfig = overrideConfig(configFactory('production'));
+const config = configFactory('production');
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -117,7 +116,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
       const appPackage = require(paths.appPackageJson);
       const publicUrl = paths.publicUrl;
-      const publicPath = overriddenConfig.output.publicPath;
+      const publicPath = config.output.publicPath;
       const buildFolder = path.relative(process.cwd(), paths.appBuild);
       printHostingInstructions(
         appPackage,
@@ -144,7 +143,7 @@ checkBrowsers(paths.appPath, isInteractive)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(overriddenConfig);
+  let compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       let messages;

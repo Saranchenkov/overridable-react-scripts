@@ -45,9 +45,7 @@ const {
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
-const configFactory = require('../config/webpack.config');
-const overrideConfig = require('../config/webpack.config.override');
-
+const configFactory = require('../config/webpack.config.override');
 const createDevServerConfig = require('../config/webpackDevServer.config.override');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
@@ -94,13 +92,12 @@ checkBrowsers(paths.appPath, isInteractive)
       return;
     }
     const config = configFactory('development');
-    const overriddenConfig = overrideConfig(config);
 
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, overriddenConfig, appName, urls, useYarn);
+    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);

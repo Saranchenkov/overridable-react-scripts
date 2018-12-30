@@ -9,6 +9,7 @@
  * @param {Object} options
  * @param {Object} options.webpack - webpack instance
  * @param {Object} options.paths - object of paths
+ * @param {String} options.webpackEnv - "development" or "production"
  */
 module.exports = function (webpackConfig, options) {
   return webpackConfig;
