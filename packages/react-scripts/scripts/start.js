@@ -45,8 +45,8 @@ const {
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
-const config = require('../config/webpack.config.dev');
-const overriddenConfig = require('../config/webpack.config.override')(config);
+const configFactory = require('../config/webpack.config');
+const overrideConfig = require('../config/webpack.config.override');
 
 const createDevServerConfig = require('../config/webpackDevServer.config.override');
 
@@ -93,6 +93,9 @@ checkBrowsers(paths.appPath, isInteractive)
       // We have not found a port.
       return;
     }
+    const config = configFactory('development');
+    const overriddenConfig = overrideConfig(config);
+
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
