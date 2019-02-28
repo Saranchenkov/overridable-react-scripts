@@ -49,7 +49,25 @@ module.exports = function (webpackDevServerConfig, options) {
   return webpackDevServerConfig;
 }; 
 ```
- 
+## Multiple env configs for production build
+[Create React App](https://github.com/Saranchenkov/create-react-app) allow only one `.env.production` config for `NODE_ENV="production"`. But this fork lets to create multiple `.env` files for production builds.
+
+`Create React App` uses variable `NODE_ENV` to find env file, but this fork uses env `ENV_FILE` for these purposes. For example, if you set `ENV_FILE=stage`, webpack will use `.env.stage` env file.
+If you don't set `ENV_FILE` variable, `NODE_ENV` will be used by default.
+You can install `cross-env` package to set and use environment variables across platforms.
+
+#### Example of npm scripts in `package.json`
+```
+"scripts": {
+  "start": "react-scripts start",
+  "build:stage": "cross-env ENV_FILE=stage react-scripts build",    // <-- .env.stage
+  "build:production": "cross-env ENV_FILE=production react-scripts build",    // <-- .env.production
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
+```
+
+
 ## Which version of `react-scripts` does this fork use ?
 You can find config version at the field `react-scripts-version` of `package.json`.
 
