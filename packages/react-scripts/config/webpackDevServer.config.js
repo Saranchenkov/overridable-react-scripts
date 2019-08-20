@@ -15,10 +15,12 @@ const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const paths = require('./paths');
 const fs = require('fs');
 
+const overrides = require('./overrides');
+
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
 const host = process.env.HOST || '0.0.0.0';
 
-module.exports = function(proxy, allowedHost) {
+function createDevServerConfig(proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -109,4 +111,12 @@ module.exports = function(proxy, allowedHost) {
       app.use(noopServiceWorkerMiddleware());
     },
   };
+}
+
+module.exports = function (proxy, allowedHost) {
+  const decorator = overrides.createWebpackDevServerDecorator({
+    proxy,
+    allowedHost,
+  });
+  return decorator(createDevServerConfig)(proxy, allowedHost);
 };
