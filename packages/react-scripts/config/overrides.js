@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 
 const identity = arg => arg;
 
@@ -24,22 +25,29 @@ function setCustomOverrides(customOverrides) {
   });
 }
 
-try {
-  const appDirectory = fs.realpathSync(process.cwd());
-  const overrideFileName = 'react-scripts.override.js';
+const appDirectory = fs.realpathSync(process.cwd());
+const overrideFileName = 'react-scripts.override.js';
+const overrideFilePath = path.resolve(appDirectory, overrideFileName);
 
-  const overrideFilePath = path.resolve(appDirectory, overrideFileName);
+try {
   const customOverrides = require(overrideFilePath);
 
   if (typeof customOverrides !== 'object' || customOverrides === null) {
-    console.error('File "react-scripts.override.js" must export object');
+    console.error(`File "${overrideFileName}" must export object`);
   }
 
   setCustomOverrides(customOverrides);
 } catch(error) {
-  if (error instanceof Error && error.code === 'MODULE_NOT_FOUND') return;
+  const isFileNotFound = error instanceof Error && error.code === 'MODULE_NOT_FOUND';
 
-  throw error;
+  console.log(util.inspect(
+    `File "${overrideFileName}" is not found at location "${overrideFilePath}"`,
+    { colors: true }
+  ));
+
+  if (!isFileNotFound) {
+    throw error;
+  }
 }
 
 module.exports = {

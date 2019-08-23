@@ -3,7 +3,7 @@
  *
  * @param {Object} paths - object contains paths for webpack and other scripts
  * @param {Object} options
- * @param {Object} options.resolveApp - function, which resolve path relative to app directory
+ * @param {Function} options.resolveApp - function, which resolve path relative to app directory
  */
 function overridePaths(paths, options) {
   return paths;
